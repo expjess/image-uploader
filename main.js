@@ -1,4 +1,5 @@
 import Exponent from 'exponent';
+import {ImagePicker} from 'exponent';
 import React from 'react';
 import {
   StyleSheet,
@@ -6,26 +7,39 @@ import {
   View,
   Image
 } from 'react-native';
+import Button from 'react-native-button';
 
 class App extends React.Component {
   render() {
     const ImageUri = 'http://images.undergroundfilmjournal.com/wp-images/andy_warhol_filming.jpg';
+    const showCamera = async () => {
+      let result = await ImagePicker.launchCameraAsync({});
+    }
+
     return (
       <View style={styles.container}>
         <Image
           style={styles.wallpaper}
-          source={{uri: ImageUri}}
+          source={{uri: ImageUri }}
         />
-        <View style={[StyleSheet.absoluteFill, {backgroundColor: 'rgba(0,0,0,0.7)'}]}>
-        <View style={[StyleSheet.absoluteFill, {alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent'}]}>
+        <View style={[StyleSheet.absoluteFill, {
+          backgroundColor: 'rgba(0,0,0,0.7)',
+          alignItems: 'center',
+          justifyContent: 'center'}]}>
         <Text style={styles.headline}>
-          Hi Ryan!
+          Camera on!
         </Text>
-        </View>
+        <Button
+          onPress={showCamera}>
+          Open camera
+        </Button>
         </View>
       </View>
     );
   }
+
+
+
 }
 
 const styles = StyleSheet.create({
