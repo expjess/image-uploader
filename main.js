@@ -1,5 +1,3 @@
-import Exponent from 'exponent';
-import {ImagePicker} from 'exponent';
 import React from 'react';
 import {
   StyleSheet,
@@ -8,30 +6,34 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
+import Exponent, {ImagePicker} from 'exponent';
 
 class App extends React.Component {
-  state = { //setimagetest
-    image: null, //setimagetest
-  } //setimagetest
+  state = {       // I'm not super sure what this does
+    image: null,
+  }
 
   render() {
+    // This stores my image URL for background image (since the URL is long )
     const BGImageUri = 'http://images.undergroundfilmjournal.com/wp-images/andy_warhol_filming.jpg';
 
-    let {image} = this.state; //setimagetest
+    let {image} = this.state;
 
+    // This function launches the camera
     const showCamera = async () => {
-      let result = await ImagePicker.launchCameraAsync({});
-      console.log(result); // setimagetest
-      if(!result.cancelled) { // setimagetest
-        this.setState({image: result.uri}) // setimagetest
+      let pick = await ImagePicker.launchCameraAsync({}); // Storing the result of camera launch as my pick
+      console.log(result); // I'm not super sure this is needed save to see that things are happening
+      if(!pick.cancelled) {
+        this.setState({image: pick.uri}) // Updating global state in line 13 with the image we took
       }
     }
 
+    // This function pulls up the camera roll
     const showPhotos = async () => {
-      let result = await ImagePicker.launchImageLibraryAsync({});
-      console.log(result);
-      if(!result.cancelled) {
-        this.setState({image: result.uri})
+      let pick = await ImagePicker.launchImageLibraryAsync({}); // Storing the chosen photo as my pick
+      console.log(pick);
+      if(!pick.cancelled) {
+        this.setState({image: pick.uri})
       }
     }
 
@@ -51,11 +53,10 @@ class App extends React.Component {
           </Text>
 
           <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around'
+            flexDirection: 'row',     // This made the buttons line up side by side
+            justifyContent: 'space-around' // This did nothing (space between buttons was fixed in button style)
           }}>
-            <TouchableOpacity
-            onPress={showCamera}>
+            <TouchableOpacity onPress={showCamera}>
               <View style={styles.button}>
                 <Text
                   style={{
@@ -69,8 +70,7 @@ class App extends React.Component {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={showPhotos}>
+            <TouchableOpacity onPress={showPhotos}>
               <View style={styles.button}>
                 <Text
                   style={{
@@ -86,8 +86,8 @@ class App extends React.Component {
           </View>
 
 
-        {image &&
-          <View style={{
+        {image &&               /* I don't really understand this part */
+          <View style={{        /* This put a frame around the image */
             borderStyle: 'solid',
             borderColor: 'grey',
             borderWidth: 1,
@@ -113,6 +113,7 @@ class App extends React.Component {
 
 }
 
+// Style sheet allows me to file away these lines of detail so they don't clutter up the main section
 const styles = StyleSheet.create({
   container: {
     flex: 1,
