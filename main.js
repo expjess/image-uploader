@@ -84,15 +84,25 @@ class App extends React.Component {
                 </View>
             </TouchableOpacity>
           </View>
-  
-        {image && <Image
-          source={{uri: image}}
-          style={{
-            width: 250,
-            height: 250,
-            margin: 20
-          }}/>
+
+
+        {image &&
+          <View style={{
+            borderStyle: 'solid',
+            borderColor: 'grey',
+            borderWidth: 1,
+            margin: 40
+          }}>
+          <Image
+            source={{uri: image}}
+            style={{
+              width: 250,
+              height: 250,
+              margin: 5
+            }}/>
+          </View>
         }
+
 
         </View>
       </View>
