@@ -27,6 +27,14 @@ class App extends React.Component {
       }
     }
 
+    const showPhotos = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({});
+      console.log(result);
+      if(!result.cancelled) {
+        this.setState({image: result.uri})
+      }
+    }
+
     return (
       <View style={styles.container}>
         <Image
@@ -37,24 +45,46 @@ class App extends React.Component {
           backgroundColor: 'rgba(0,0,0,0.7)',
           alignItems: 'center',
           justifyContent: 'center'}]}>
-        <Text style={styles.headline}>
-          Show us a photo, svp!
-        </Text>
-        <TouchableOpacity
-          onPress={showCamera}>
-          <View style={styles.button}>
-            <Text
-              style={{
-                color: 'white',
-                fontWeight: 'bold',
-                backgroundColor: 'transparent',
-                fontSize: 20
-              }}>
-              Camera
-              </Text>
-            </View>
-        </TouchableOpacity>
 
+          <Text style={styles.headline}>
+            Show us a photo, svp!
+          </Text>
+
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around'
+          }}>
+            <TouchableOpacity
+            onPress={showCamera}>
+              <View style={styles.button}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    backgroundColor: 'transparent',
+                    fontSize: 20
+                  }}>
+                  Camera
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={showPhotos}>
+              <View style={styles.button}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    backgroundColor: 'transparent',
+                    fontSize: 20
+                  }}>
+                  Photos
+                  </Text>
+                </View>
+            </TouchableOpacity>
+          </View>
+  
         {image && <Image
           source={{uri: image}}
           style={{
@@ -101,6 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     padding: 5,
+    marginHorizontal: 10
   }
 });
 
