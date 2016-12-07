@@ -10,18 +10,29 @@ import {
 import Button from 'react-native-button';
 
 class App extends React.Component {
+  state = { //setimagetest
+    image: null, //setimagetest
+  } //setimagetest
+
   render() {
-    const ImageUri = 'http://images.undergroundfilmjournal.com/wp-images/andy_warhol_filming.jpg';
+    const BGImageUri = 'http://images.undergroundfilmjournal.com/wp-images/andy_warhol_filming.jpg';
+
+    let {image} = this.state; //setimagetest
+
     const showCamera = async () => {
       let result = await ImagePicker.launchCameraAsync({});
+      console.log(result); // setimagetest
+      if(!result.cancelled) { // setimagetest
+        this.setState({image: result.uri}) // setimagetest
+      }
     }
 
     return (
       <View style={styles.container}>
-        <Image
+        {/* <Image
           style={styles.wallpaper}
-          source={{uri: ImageUri }}
-        />
+          source={{uri: BGImageUri}}
+        /> */}
         <View style={[StyleSheet.absoluteFill, {
           backgroundColor: 'rgba(0,0,0,0.7)',
           alignItems: 'center',
@@ -33,6 +44,9 @@ class App extends React.Component {
           onPress={showCamera}>
           Open camera
         </Button>
+
+        {image && <Image source={{uri: image}} style={{width:50, height:50}}/>}
+
         </View>
       </View>
     );
