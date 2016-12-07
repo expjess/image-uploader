@@ -5,9 +5,9 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
-import Button from 'react-native-button';
 
 class App extends React.Component {
   state = { //setimagetest
@@ -29,23 +29,40 @@ class App extends React.Component {
 
     return (
       <View style={styles.container}>
-        {/* <Image
+        <Image
           style={styles.wallpaper}
           source={{uri: BGImageUri}}
-        /> */}
+        />
         <View style={[StyleSheet.absoluteFill, {
           backgroundColor: 'rgba(0,0,0,0.7)',
           alignItems: 'center',
           justifyContent: 'center'}]}>
         <Text style={styles.headline}>
-          Camera on!
+          Show us a photo, svp!
         </Text>
-        <Button
+        <TouchableOpacity
           onPress={showCamera}>
-          Open camera
-        </Button>
+          <View style={styles.button}>
+            <Text
+              style={{
+                color: 'white',
+                fontWeight: 'bold',
+                backgroundColor: 'transparent',
+                fontSize: 20
+              }}>
+              Camera
+              </Text>
+            </View>
+        </TouchableOpacity>
 
-        {image && <Image source={{uri: image}} style={{width:50, height:50}}/>}
+        {image && <Image
+          source={{uri: image}}
+          style={{
+            width: 250,
+            height: 250,
+            margin: 20
+          }}/>
+        }
 
         </View>
       </View>
@@ -76,6 +93,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     fontSize: 20,
     marginBottom: 20,
+  },
+  button: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderStyle: 'solid',
+    borderColor: 'grey',
+    borderRadius: 10,
+    borderWidth: 1,
+    padding: 5,
   }
 });
 
