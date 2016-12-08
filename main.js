@@ -16,17 +16,19 @@ class App extends React.Component {
   render() {
     // This stores my image URL for background image (since the URL is long )
     const BGImageUri = 'http://images.undergroundfilmjournal.com/wp-images/andy_warhol_filming.jpg';
+    const imgurID = '607d5fae371a85b'; // client_id from imgur developer API registration
+    const imgurUri = 'https://api.imgur.com/3/image';
 
     let {image} = this.state;
 
     // This function launches the camera
     const showCamera = async () => {
       let pick = await ImagePicker.launchCameraAsync({}); // Storing the result of camera launch as my pick
-      console.log(result); // I'm not super sure this is needed save to see that things are happening
+      console.log(pick); // I'm not super sure this is needed save to see that things are happening
       if(!pick.cancelled) {
         this.setState({image: pick.uri}) // Updating global state in line 13 with the image we took
       }
-    }
+    };
 
     // This function pulls up the camera roll
     const showPhotos = async () => {
@@ -35,7 +37,24 @@ class App extends React.Component {
       if(!pick.cancelled) {
         this.setState({image: pick.uri})
       }
-    }
+    };
+
+    // This function tries to upload to imgur but doesn't work yet
+    const uploadImage = async () => {
+      let body = new FormData();
+      body.append ('image', {uri: image, name: 'hellophoto', type: 'image/jpeg'});
+
+      console.log('About to upload!');
+
+      let response = await fetch(imgurUri, {
+        method: 'POST',
+        headers: {Authorization: 'Client-ID ' + imgurID},
+        body: body,
+      })
+
+      console.log(await response.text());
+
+    };
 
     return (
       <View style={styles.container}>
@@ -104,12 +123,32 @@ class App extends React.Component {
         }
 
 
+        <View style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: 20
+        }}>
+          <TouchableOpacity onPress={uploadImage}>
+            <View style={styles.button}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  backgroundColor: 'transparent',
+                  fontSize: 20
+                }}>
+                Upload
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+        </View>
+
+
         </View>
       </View>
     );
   }
-
-
 
 }
 
