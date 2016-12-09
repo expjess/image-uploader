@@ -49,10 +49,12 @@ class App extends React.Component {
       let response = await fetch(imgurUri, {
         method: 'POST',
         headers: {Authorization: 'Client-ID ' + imgurID},
-        body: body,
+        body: body
       })
 
-      console.log(await response.text());
+      let uploadedImage = (await response.json()).data.link;
+
+      console.log(uploadedImage);
 
     };
 
